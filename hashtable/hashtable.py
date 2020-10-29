@@ -81,6 +81,17 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        index = self.hash(key)
+        if self.array[index] is not None:
+            for kvp in self.array[index]:
+                if kvp[0] == key:
+                    kvp[1] = value
+                    break
+            else:
+                self.array[index].append([key, value])
+        else:
+            self.array[index] = []
+            self.array[index].append([key, value])
 
     def delete(self, key):
         """
@@ -91,6 +102,11 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        index = self.hash_index(key)
+        if self.store[index] is None:
+            print('No entry with the provided key.')
+            return
+        self.store[index] = None
 
     def get(self, key):
         """
@@ -101,6 +117,21 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        """Get a value by key"""
+        index = self.hash(key)
+        if self.array[index] is None:
+            raise KeyError()
+        else:
+            # Loop through all key-value-pairs
+            # and find if our key exist. If it does
+            # then return its value.
+            for kvp in self.array[index]:
+                if kvp[0] == key:
+                    return kvp[1]
+
+            # If no return was done during loop,
+            # it means key didn't exist.
+            raise KeyError()
 
     def resize(self, new_capacity):
         """
